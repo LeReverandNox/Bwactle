@@ -11,7 +11,6 @@
     ionicConfig.$inject = ["$ionicPlatform"];
 
     function ionicConfig($ionicPlatform) {
-        console.log('On charge la config Ionic');
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
