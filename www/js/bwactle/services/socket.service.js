@@ -16,8 +16,11 @@
             apiUrl: 'http://wac.epitech.eu:1337',
             socket: null,
             //Methods
-            connect: connect
+            connect: connect,
+            disconnect: disconnect
         };
+
+        return service;
 
         function connect(user, cb) {
             var self = this;
@@ -44,6 +47,10 @@
                 socket.on('player/add', playerAddCb);
             });
         }
-        return service;
+
+        function disconnect(cb) {
+            this.socket.disconnect();
+            cb(false);
+        }
     }
 }());

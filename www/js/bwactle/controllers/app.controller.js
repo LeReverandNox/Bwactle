@@ -8,13 +8,27 @@
         .module("bwactle")
         .controller("App", AppController);
 
-    AppController.$inject = ["$scope", "$ionicModal", "$state"];
+    AppController.$inject = ["$rootScope", "$scope", "$ionicPopup", "$state", "userService"];
 
-    function AppController($rootScope, $scope, $state) {
+    function AppController($rootScope, $scope, $ionicPopup ,$state, userService) {
         var A = this;
 
         A.logout = function () {
-            console.log('ON LOGOUT !!!');
+            userService.logout(function (err) {
+                if (err) {
+                    return $ionicPopup.alert({
+                        title: "Uh-oh... something went wrong !",
+                        template: err
+                    });
+                }
+                return $ionicPopup.alert({
+                    title: "Info",
+                    template: "You are now disconnected.\nSee you 'round"
+                }).then(function () {
+                    $state.go('login');
+                });
+
+            });
         };
     }
 }());

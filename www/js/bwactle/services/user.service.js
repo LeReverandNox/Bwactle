@@ -45,8 +45,13 @@
             });
         }
 
-        function logout() {
-            console.log('Voila, on est logout');
+        function logout(cb) {
+            socketService.disconnect(function (err) {
+                if (err) {
+                    return cb(err);
+                }
+                return cb(false);
+            });
         }
     }
 }());
