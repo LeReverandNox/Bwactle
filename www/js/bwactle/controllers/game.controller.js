@@ -8,9 +8,9 @@
         .module("bwactle")
         .controller("Game", GameController);
 
-    GameController.$inject = ["$rootScope", "$scope", "$state", "userService", "$ionicHistory"];
+    GameController.$inject = ["$rootScope", "$scope", "$state", "userService", "$ionicHistory", "gameService"];
 
-    function GameController($rootScope, $scope, $state, userService, $ionicHistory) {
+    function GameController($rootScope, $scope, $state, userService, $ionicHistory, gameService) {
         if (!userService.isConnected) {
             $ionicHistory.nextViewOptions({
                 disableAnimate: true,
@@ -18,7 +18,11 @@
             });
 
             $state.go("login");
-            return true;
         }
+
+        $rootScope.$on('startGame', function (e, player) {
+            gameService.setPlayer(player);
+            gameService.init();
+        });
     }
 }());

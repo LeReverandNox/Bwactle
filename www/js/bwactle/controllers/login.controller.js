@@ -8,9 +8,9 @@
         .module("bwactle")
         .controller("Login", LoginController);
 
-    LoginController.$inject = ["$rootScope", "$scope", "$ionicPopup", "$state" ,"userService"];
+    LoginController.$inject = ["$rootScope", "$scope", "$ionicPopup", "$state", "userService", "gameService"];
 
-    function LoginController($rootScope, $scope, $ionicPopup, $state, userService) {
+    function LoginController($rootScope, $scope, $ionicPopup, $state, userService, gameService) {
         var L = this;
 
         L.user = {
@@ -29,9 +29,9 @@
                         L.user.password = "";
                     });
                 }
-                console.log('On est co !!!');
-                console.log(player);
-                $state.go('app.game');
+
+                $rootScope.$emit('startGame', player);
+                return $state.go('app.game');
             });
         };
     }

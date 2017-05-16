@@ -11,8 +11,6 @@
     routerConfig.$inject = ["$stateProvider", "$urlRouterProvider", "$locationProvider"];
 
     function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
-        $locationProvider.html5Mode(true);
-
         getStates().forEach(function (state) {
             $stateProvider.state(state.state, state.config);
         });
