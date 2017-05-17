@@ -19,7 +19,8 @@
             connect: connect,
             disconnect: disconnect,
             onPlayerAdd: onPlayerAdd,
-            onPlayerMove: onPlayerMove
+            onPlayerMove: onPlayerMove,
+            move: move
         };
 
         return service;
@@ -38,6 +39,7 @@
             var playerAddCb = function (player) {
                 if (player.login === user.login) {
                     socket.removeListener('player/add', playerAddCb);
+                    socket.removeListener('msg', msgCb);
 
                     self.socket = socketFactory({ioSocket: socket});
                     cb(false, player);
@@ -64,6 +66,10 @@
             this.socket.on('player/move', function (player) {
                 cb(player);
             });
+        }
+
+        function move(direction) {
+            this.socket.emit('move', direction);
         }
     }
 }());

@@ -27,8 +27,6 @@
             setPlayer: setPlayer
         };
 
-        return service;
-
         function init(cb) {
             $rootScope.$emit('initGrid');
             $rootScope.$emit('updateGrid');
@@ -49,7 +47,6 @@
             // console.log(newPlayer);
             // console.log('*****');
             if (newPlayer.login === this.player.login) {
-                console.log('On et mort, on respawn');
                 this.player = newPlayer;
                 return $rootScope.$emit('updateGrid');
             }
@@ -60,19 +57,30 @@
             // console.log(alreadyExist);
             if (alreadyExist) {
                 // console.log(`${newPlayer.login} est deja co, on update`);
-                alreadyExist.x = newPlayer.x;
-                alreadyExist.y = newPlayer.y;
-                alreadyExist.lvl = newPlayer.lvl;
-                alreadyExist.life = newPlayer.life;
-                alreadyExist.lifeMax = newPlayer.lifeMax;
-                alreadyExist.xp = newPlayer.xp;
-                alreadyExist.xpLvl = newPlayer.xpLvl;
-                alreadyExist.rot = newPlayer.rot;
+                alreadyExist = newPlayer;
+                // alreadyExist.x = newPlayer.x;
+                // alreadyExist.y = newPlayer.y;
+                // alreadyExist.lvl = newPlayer.lvl;
+                // alreadyExist.life = newPlayer.life;
+                // alreadyExist.lifeMax = newPlayer.lifeMax;
+                // alreadyExist.xp = newPlayer.xp;
+                // alreadyExist.xpLvl = newPlayer.xpLvl;
+                // alreadyExist.rot = newPlayer.rot;
             } else {
                 this.players.push(newPlayer);
             }
 
             $rootScope.$emit('updateGrid');
         }
+
+        // PRIVATE
+        function move(e, direction) {
+            socketService.move(direction);
+        }
+
+        // EVENTS
+        $rootScope.$on('move', move);
+
+        return service;
     }
 }());

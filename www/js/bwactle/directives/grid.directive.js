@@ -118,10 +118,23 @@
             }
 
             function startEmitters() {
-                console.log('On start les emiiters');
-                console.log(angular.element('document'));
-                angular.element(document).keypress(function (e) {
-                    console.log(e);
+                angular.element(document).keydown(function (e) {
+                    switch(e.which) {
+                        case 37: // left
+                            $rootScope.$emit('move', 'left');
+                            break;
+                        case 38: // up
+                            $rootScope.$emit('move', 'up');
+                            break;
+                        case 39: // right
+                            $rootScope.$emit('move', 'right');
+                            break;
+                        case 40: // down
+                            $rootScope.$emit('move', 'down');
+                            break;
+                        default: return; // exit this handler for other keys
+                    }
+                    e.preventDefault(); // prevent the default action (scroll / move caret)
                 });
             }
 
