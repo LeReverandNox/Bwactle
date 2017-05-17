@@ -20,6 +20,7 @@
             disconnect: disconnect,
             onPlayerAdd: onPlayerAdd,
             onPlayerMove: onPlayerMove,
+            onPlayerRemove: onPlayerRemove,
             onItemAdd: onItemAdd,
             onItemRemove: onItemRemove,
             onMsg: onMsg,
@@ -70,6 +71,11 @@
         function onPlayerMove(cb) {
             this.socket.on('player/move', function (player) {
                 cb(player);
+            });
+        }
+        function onPlayerRemove(cb) {
+            this.socket.on('player/remove', function (login) {
+                cb(login);
             });
         }
         function onItemAdd(cb) {

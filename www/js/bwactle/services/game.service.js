@@ -40,6 +40,7 @@
         function startListeners() {
             socketService.onPlayerAdd(addPlayer.bind(this));
             socketService.onPlayerMove(addPlayer.bind(this));
+            socketService.onPlayerRemove(removePlayer.bind(this));
             socketService.onItemAdd(addItem.bind(this));
             socketService.onItemRemove(removeItem.bind(this));
             // TODO: implement and display
@@ -75,6 +76,16 @@
             }
 
             $rootScope.$emit('updateGrid');
+        }
+
+        function removePlayer(login) {
+            var index = this.players.findIndex(function (player) {
+                return player.login === login;
+            });
+            if (index !== -1) {
+                this.players.splice(index, 1);
+                $rootScope.$emit('updateGrid');
+            }
         }
 
         function addItem(newItem) {
