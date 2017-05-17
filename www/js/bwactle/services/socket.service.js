@@ -17,7 +17,9 @@
             socket: null,
             //Methods
             connect: connect,
-            disconnect: disconnect
+            disconnect: disconnect,
+            onPlayerAdd: onPlayerAdd,
+            onPlayerMove: onPlayerMove
         };
 
         return service;
@@ -51,6 +53,17 @@
         function disconnect(cb) {
             this.socket.disconnect();
             cb(false);
+        }
+
+        function onPlayerAdd(cb) {
+            this.socket.on('player/add', function (player) {
+                cb(player);
+            });
+        }
+        function onPlayerMove(cb) {
+            this.socket.on('player/move', function (player) {
+                cb(player);
+            });
         }
     }
 }());

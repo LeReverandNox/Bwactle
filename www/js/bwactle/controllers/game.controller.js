@@ -21,6 +21,8 @@
         }
 
         $rootScope.$on('startGame', function (e, player) {
+            gameService.startListeners();
+            $rootScope.$emit('startEmitters');
             gameService.setPlayer(player);
             gameService.init();
         });

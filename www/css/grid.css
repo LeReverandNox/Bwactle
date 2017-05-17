@@ -1,0 +1,24 @@
+grid {
+    display: block;
+    text-align: center;
+    padding-top: 14px;
+}
+
+.game-grid {
+    border: 1px solid #ddd;
+    display: inline-block;
+    padding: 1px;
+}
+
+.game-row {
+    margin: 0;
+}
+
+.game-cell {
+    border: 1px solid #ddd;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    /*margin: 1px;*/
+    vertical-align: top;
+}
