@@ -1,0 +1,14 @@
+<div class="list">
+    <div class="item"
+         collection-repeat="player in P.players | orderBy: '+login'">
+      <h2 class="text-center">{{player.login}}</h2>
+      <h3>
+        <p class="text-left" style="float: left">Position: ({{player.x}}, {{player.y}})</p>
+        <p class="text-right" style="float: right">Score: ?</p>
+      </h3>
+      <h3>
+        <p class="text-left" style="float: left">Life: {{player.life}}/{{player.lifeMax}}</p>
+        <p class="text-right" style="float: right">Level: {{player.lvl}}</p>
+      </h3>
+    </div>
+</div>

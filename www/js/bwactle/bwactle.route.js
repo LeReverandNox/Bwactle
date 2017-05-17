@@ -50,6 +50,19 @@
                         }
                     }
                 }
+            },
+            {
+                state: 'app.players',
+                config: {
+                    url: 'players',
+                    views: {
+                        'menuContent': {
+                            templateUrl: 'templates/players.html',
+                            controller: 'Players',
+                            controllerAs: 'P'
+                        }
+                    }
+                }
             }
         ];
     }

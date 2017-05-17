@@ -19,6 +19,6 @@ grid {
     width: 30px;
     height: 30px;
     display: inline-block;
-    /*margin: 1px;*/
     vertical-align: top;
+    line-height: 30px;
 }

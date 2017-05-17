@@ -41,6 +41,29 @@
                 }
             }
 
+            function findOrientation(entity) {
+                var char;
+
+                switch (entity.rot) {
+                    case 'up':
+                        char = "&uarr;";
+                        break;
+                    case 'down':
+                        char = "&darr;";
+                        break;
+                    case 'left':
+                        char = "&larr;";
+                        break;
+                    case 'right':
+                        char = "&rarr;";
+                        break;
+                    default:
+                        break;
+                }
+
+                return char;
+            }
+
             function spawnPlayers() {
                 gameService.players.forEach(function (player) {
                     // console.log(`On a ce plauyer dand l'array ${player.login}`);
@@ -54,7 +77,9 @@
 
                         localX = player.x - gridOffsetX;
                         localY = player.y - gridOffsetY;
-                        findCellAt(localX, localY).css('background-color', 'green');
+                        findCellAt(localX, localY)
+                            .css('background-color', 'green')
+                            .html(findOrientation(player));
                     }
                 });
             }
@@ -69,7 +94,7 @@
 
                         localX = item.x - gridOffsetX;
                         localY = item.y - gridOffsetY;
-                        findCellAt(localX, localY).css('background-color', 'blue');
+                        findCellAt(localX, localY).css('background-color', 'blue').html('I');
                     }
                 });
             }
@@ -103,7 +128,9 @@
                 gridLastIndexX = gridOffsetX + 10;
                 gridLastIndexY = gridOffsetY + 10;
 
-                findCellAt(playerX, playerY).css('background-color', 'red');
+                findCellAt(playerX, playerY)
+                    .css('background-color', 'red')
+                    .html(findOrientation(gameService.player));
 
                 console.log(`Real pX ${gameService.player.x}, Real pY ${gameService.player.y}`);
                 // console.log(`grid pX ${playerX}, grid pY ${playerY}`);
@@ -115,7 +142,7 @@
                 var i, j, $row, $cell;
                 for (i = 0; i < 11; i += 1) {
                     for (j = 0; j < 11; j += 1) {
-                        findCellAt(i, j).css('background-color', 'white');
+                        findCellAt(i, j).css('background-color', 'white').html(null);
                     }
                 }
             }
