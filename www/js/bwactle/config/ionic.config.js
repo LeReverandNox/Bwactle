@@ -8,9 +8,11 @@
         .module('bwactle')
         .run(ionicConfig);
 
-    ionicConfig.$inject = ["$ionicPlatform"];
+    ionicConfig.$inject = ["$ionicPlatform", "$ionicConfig"];
 
-    function ionicConfig($ionicPlatform) {
+    function ionicConfig($ionicPlatform, $ionicConfig) {
+        $ionicConfig.navBar.alignTitle('center');
+
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
