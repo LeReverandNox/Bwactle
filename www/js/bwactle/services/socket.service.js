@@ -20,7 +20,12 @@
             disconnect: disconnect,
             onPlayerAdd: onPlayerAdd,
             onPlayerMove: onPlayerMove,
-            move: move
+            onItemAdd: onItemAdd,
+            onItemRemove: onItemRemove,
+            onMsg: onMsg,
+            move: move,
+            attack: attack,
+            pick: pick
         };
 
         return service;
@@ -67,9 +72,31 @@
                 cb(player);
             });
         }
+        function onItemAdd(cb) {
+            this.socket.on('item/add', function (item) {
+                cb(item);
+            });
+        }
+        function onItemRemove(cb) {
+            this.socket.on('item/remove', function (itemId) {
+                cb(itemId);
+            });
+        }
+        function onMsg(cb) {
+            this.socket.on('msg', function (msg) {
+                cb(msg);
+            });
+        }
 
         function move(direction) {
             this.socket.emit('move', direction);
+        }
+
+        function attack(direction) {
+            this.socket.emit('attack', direction);
+        }
+        function pick() {
+            this.socket.emit('pick');
         }
     }
 }());

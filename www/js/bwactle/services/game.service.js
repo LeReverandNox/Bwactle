@@ -40,6 +40,10 @@
         function startListeners() {
             socketService.onPlayerAdd(addPlayer.bind(this));
             socketService.onPlayerMove(addPlayer.bind(this));
+            socketService.onItemAdd(addItem.bind(this));
+            socketService.onItemRemove(removeItem.bind(this));
+            // TODO: implement and display
+            socketService.onMsg(function (msg) {console.log(msg)});
         }
 
         function addPlayer(newPlayer) {
@@ -73,13 +77,42 @@
             $rootScope.$emit('updateGrid');
         }
 
+        function addItem(newItem) {
+            var alreadyExist = this.items.find(function (item) {
+                return item.id === newItem.id;
+            });
+            if (!alreadyExist) {
+                this.items.push(newItem);
+            }
+
+            $rootScope.$emit('updateGrid');
+        }
+
+        function removeItem(itemId) {
+            var index = this.items.findIndex(function (item) {
+                return item.id === itemId;
+            });
+            if (index !== -1) {
+                this.items.splice(index, 1);
+                $rootScope.$emit('updateGrid');
+            }
+        }
+
         // PRIVATE
         function move(e, direction) {
             socketService.move(direction);
         }
+        function attack() {
+            socketService.attack(this.player.rot);
+        }
+        function pick() {
+            socketService.pick();
+        }
 
         // EVENTS
         $rootScope.$on('move', move);
+        $rootScope.$on('attack', attack.bind(service));
+        $rootScope.$on('pick', pick.bind(service));
 
         return service;
     }

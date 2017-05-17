@@ -47,8 +47,9 @@
                     if ((player.x <= gridLastIndexX && player.x >= gridOffsetX) &&
                         (player.y <= gridLastIndexY && player.y >= gridOffsetY))
                     {
-                        // console.log('On doit afficher de player car il est dans le viewport');
-                        // console.log(`${player.login}, x:${player.x}, y:${player.y}`);
+                        console.log(`On a ce player dand l'array`);
+                        console.log(player);
+
                         var localX, localY;
 
                         localX = player.x - gridOffsetX;
@@ -60,7 +61,16 @@
 
             function spawnItems() {
                 gameService.items.forEach(function (item) {
+                    if ((item.x <= gridLastIndexX && item.x >= gridOffsetX) &&
+                        (item.y <= gridLastIndexY && item.y >= gridOffsetY)) {
+                        var localX, localY;
+                        console.log(`On a ce item dand l'array`);
+                        console.log(item);
 
+                        localX = item.x - gridOffsetX;
+                        localY = item.y - gridOffsetY;
+                        findCellAt(localX, localY).css('background-color', 'blue');
+                    }
                 });
             }
 
@@ -119,6 +129,7 @@
 
             function startEmitters() {
                 angular.element(document).keydown(function (e) {
+                    console.log(e.which);
                     switch(e.which) {
                         case 37: // left
                             $rootScope.$emit('move', 'left');
@@ -131,6 +142,12 @@
                             break;
                         case 40: // down
                             $rootScope.$emit('move', 'down');
+                            break;
+                        case 65: // A
+                            $rootScope.$emit('attack');
+                            break;
+                        case 80: // P
+                            $rootScope.$emit('pick');
                             break;
                         default: return; // exit this handler for other keys
                     }
