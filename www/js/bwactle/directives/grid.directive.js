@@ -40,6 +40,7 @@
                         $cell.css('background-color', 'white');
                     }
                 }
+                gameService.isStarted = true;
             }
 
             function findOrientation(entity) {
@@ -71,16 +72,26 @@
                     if ((player.x <= gridLastIndexX && player.x >= gridOffsetX) &&
                         (player.y <= gridLastIndexY && player.y >= gridOffsetY))
                     {
-                        // console.log(`On a ce player dand l'array`);
-                        // console.log(player);
+                        console.log(`On a ce player dand l'array`);
+                        console.log(player);
 
-                        var localX, localY;
+                        var localX, localY, $cell;
 
                         localX = player.x - gridOffsetX;
                         localY = player.y - gridOffsetY;
-                        findCellAt(localX, localY)
+                        $cell = findCellAt(localX, localY)
                             .css('background-color', 'green')
                             .html(findOrientation(player));
+                        $cell.qtip({
+                            show: 'tap',
+                            hide: {
+                                delay: 1000
+                            },
+                            content: {
+                                title: 'Player:',
+                                text: 'Login: ' + player.login + ',</br>Life: ' + player.life + '/' + player.lifeMax + ',</br>Lvl: ' + player.lvl
+                            }
+                        });
                     }
                 });
             }
@@ -89,19 +100,31 @@
                 gameService.items.forEach(function (item) {
                     if ((item.x <= gridLastIndexX && item.x >= gridOffsetX) &&
                         (item.y <= gridLastIndexY && item.y >= gridOffsetY)) {
-                        var localX, localY;
-                        // console.log(`On a ce item dand l'array`);
-                        // console.log(item);
+                        var localX, localY, $cell;
+                        console.log(`On a ce item dand l'array`);
+                        console.log(item);
 
                         localX = item.x - gridOffsetX;
                         localY = item.y - gridOffsetY;
-                        findCellAt(localX, localY).css('background-color', 'blue').html('I');
+                        $cell = findCellAt(localX, localY)
+                            .css('background-color', 'blue')
+                            .html('I');
+                        $cell.qtip({
+                            show: 'tap',
+                            hide: {
+                                delay: 1000
+                            },
+                            content: {
+                                title: 'Item:',
+                                text: 'Name: ' + item.name + ',</br>Damages: ' + item.dmg + ',</br>Type: ' + item.type + ',</br>Uses: ' + item.use
+                            }
+                        });
                     }
                 });
             }
 
             function spawnPlayer() {
-                var playerX, playerY;
+                var playerX, playerY, $cell;
 
                 if (gameService.player.x < 5) {
                     playerX = gameService.player.x;
@@ -129,10 +152,20 @@
                 gridLastIndexX = gridOffsetX + 10;
                 gridLastIndexY = gridOffsetY + 10;
 
-                findCellAt(playerX, playerY)
+                $cell = findCellAt(playerX, playerY)
                     .css('background-color', 'red')
                     .html(findOrientation(gameService.player));
 
+                $cell.qtip({
+                    show: 'tap',
+                    hide: {
+                        delay: 1000
+                    },
+                    content: {
+                        title: 'Myself:',
+                        text: 'Login: ' + gameService.player.login + ',</br>Life: ' + gameService.player.life + '/' + gameService.player.lifeMax + ',</br>Lvl: ' + gameService.player.lvl + ',</br>XP: ' + gameService.player.xp + '/' + gameService.player.xpLvl
+                    }
+                });
                 console.log(`Real pX ${gameService.player.x}, Real pY ${gameService.player.y}`);
                 // console.log(`grid pX ${playerX}, grid pY ${playerY}`);
                 // console.log(`grid offsetX ${gridOffsetX}, grid offsetY ${gridOffsetY}`);
@@ -140,10 +173,11 @@
             }
 
             function cleanGrid() {
-                var i, j, $row, $cell;
+                var i, j, $cell;
                 for (i = 0; i < 11; i += 1) {
                     for (j = 0; j < 11; j += 1) {
-                        findCellAt(i, j).css('background-color', 'white').html(null);
+                        $cell = findCellAt(i, j).css('background-color', 'white').html(null);
+                        $cell.qtip('destroy');
                     }
                 }
             }
@@ -162,7 +196,7 @@
                 var cell = findCellAt(x, y);
                 // console.log(`Voici la next cell a ${x} ${y}`);
                 // console.log(cell.css('background-color'), cell.html());
-                if (cell.css('background-color') === 'rgb(255, 255, 255)' && cell.html() === '') {
+                if ((cell.css('background-color') === 'rgb(255, 255, 255)' || cell.css('background-color') === 'rgb(0, 0, 255)') && (cell.html() === '' || cell.html() === 'I')) {
                     return true;
                 }
             }

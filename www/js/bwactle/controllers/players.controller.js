@@ -8,9 +8,9 @@
         .module("bwactle")
         .controller("Players", PlayersController);
 
-    PlayersController.$inject = ["$rootScope", "$scope", "$state", "gameService", "userService"];
+    PlayersController.$inject = ["$rootScope", "$scope", "$state", "gameService", "userService", "$ionicHistory"];
 
-    function PlayersController($rootScope, $scope, $state, gameService, userService) {
+    function PlayersController($rootScope, $scope, $state, gameService, userService, $ionicHistory) {
         if (!userService.isConnected) {
             $ionicHistory.nextViewOptions({
                 disableAnimate: true,

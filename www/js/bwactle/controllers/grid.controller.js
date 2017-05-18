@@ -12,6 +12,5 @@
 
     function GridController($rootScope, $scope, $state, gameService) {
         var G = this;
-
     }
 }());

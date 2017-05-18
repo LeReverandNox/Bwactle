@@ -19,6 +19,7 @@
             inventory: [],
             players: [],
             items: [],
+            isStarted: false,
             //Methods
             init: init,
             startListeners: startListeners,
@@ -28,7 +29,9 @@
         };
 
         function init(cb) {
-            $rootScope.$emit('initGrid');
+            if (!this.isStarted) {
+                $rootScope.$emit('initGrid');
+            }
             $rootScope.$emit('updateGrid');
         }
 
