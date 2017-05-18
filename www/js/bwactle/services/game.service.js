@@ -64,8 +64,7 @@
             socketService.onInventoryUpdate(addInventory.bind(this));
             socketService.onEquipmentSet(setEquipment.bind(this));
             socketService.onEquipmentUnset(unsetEquipment.bind(this));
-            // TODO: implement and display
-            socketService.onMsg(function (msg) {console.log(msg)});
+            socketService.onMsg(displayMessage.bind(this));
         }
 
         function isWeapon(itemId) {
@@ -163,17 +162,17 @@
         }
 
         function setEquipment(item) {
-            console.log('On equip');
-            console.log(item);
             this.equipedItem = item;
             $rootScope.$emit('updateEquipment');
         }
 
         function unsetEquipment() {
-            console.log('On DESequip');
-
             this.equipedItem = null;
             $rootScope.$emit('updateEquipment');
+        }
+
+        function displayMessage(msg) {
+            $rootScope.$emit('updateMsg', msg);
         }
 
         // PRIVATE

@@ -29,6 +29,34 @@
 
         var G = this;
 
+        $scope.messageType = '';
+        $scope.messageContent = '';
+
+        $rootScope.$on('updateMsg', function (e, msg) {
+            console.log(msg);
+            if (msg.content) {
+                $scope.messageContent = msg.content;
+            }
+            if (msg.type) {
+                switch (msg.type) {
+                case 0:
+                    $scope.messageType = 'Info - ';
+                    break;
+                case 1:
+                    $scope.messageType = 'API Error - ';
+                    break;
+                case 2:
+                    $scope.messageType = 'Error - ';
+                    break;
+                case 3:
+                    $scope.messageType = 'Fatal ERROR - ';
+                    break;
+                default:
+                    break;
+                }
+            }
+        });
+
         G.touch = function (e) {
             var $el = angular.element(e.target);
             switch ($el.attr('action')) {
