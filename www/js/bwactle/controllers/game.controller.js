@@ -26,5 +26,30 @@
             gameService.setPlayer(player);
             gameService.init();
         });
+
+        var G = this;
+
+        G.touch = function (e) {
+            var $el = angular.element(e.target);
+            switch ($el.attr('action')) {
+                case 'attack':
+                    attack();
+                    break;
+                case 'unequip':
+                    unequip();
+                    break;
+                default:
+                    break;
+            }
+        };
+
+        function attack() {
+            $rootScope.$emit('attack');
+        };
+
+        function unequip() {
+            $rootScope.$emit('unequip');
+        };
+
     }
 }());

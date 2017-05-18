@@ -37,4 +37,8 @@ inventory {
   line-height: 70px;
 }
 
+.inventory-item-holder {
+  display: inline-block;
+}
+
 

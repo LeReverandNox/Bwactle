@@ -1,6 +1,14 @@
-<ion-view view-title="BwacTle">
+<ion-view view-title="BwacTle" on-touch="G.touch($event)">
   <ion-content>
     <grid></grid>
     <inventory></inventory>
+    <div class="text-center">
+      <button class="button button-assertive" action="attack">
+      Attack
+      </button>
+      <button class="button button-assertive" action="unequip">
+      Unequip
+      </button>
+    </div>
   </ion-content>
 </ion-view>

@@ -28,20 +28,31 @@
             function findCellAt(x) {
                 return $inventoryHolder.find('.inventory-cell').eq(x);
             }
+            function findDropButtonAt(x) {
+                return $inventoryHolder.find('.inventory-button').eq(x);
+            }
 
             function initInventory() {
-                var i, $cell;
+                var i, $cell, $button, $holder;
                 for (i = 0; i < 3; i += 1) {
-                    $cell = angular.element('<div class="inventory-cell"></div>').appendTo($inventoryHolder);
+                    $holder = angular.element('<div class="inventory-item-holder"></div>').appendTo($inventoryHolder);
+                    $cell = angular.element('<div class="inventory-cell"></div>').appendTo($holder);
+                    $button = angular.element('<br/><button class="inventory-button button button-balanced">Drop</button>').appendTo($holder);
                     $cell.css('background-color', 'white');
                 }
             }
 
             function cleanInventory() {
-                var i, $cell;
+                var i, $cell, $button;
                 for (i = 0; i < 3; i += 1) {
-                    $cell = findCellAt(i).css('background-color', 'white').html(null);
+                    $cell = findCellAt(i).css('background-color', 'white').html(null)
+                        .attr('item-id', '')
+                        .attr('action', '');
                     $cell.qtip('destroy');
+
+                    $button = findDropButtonAt(i)
+                        .attr('item-id', '')
+                        .attr('action', '');
                 }
             }
 
@@ -54,7 +65,7 @@
                 cleanInventory();
 
                 gameService.inventory.forEach(function (item) {
-                    var $cell;
+                    var $cell, $button;
 
                     $cell = findCellAt(x)
                         .css('background-color', 'blue')
@@ -72,6 +83,9 @@
                         }
                     });
 
+                    $button = findDropButtonAt(x)
+                        .attr('item-id', item.id)
+                        .attr('action', 'drop');
                     x += 1;
                 });
             }
