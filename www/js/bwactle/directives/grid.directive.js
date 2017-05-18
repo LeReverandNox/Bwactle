@@ -156,6 +156,8 @@
                     .css('background-color', 'red')
                     .html(findOrientation(gameService.player));
 
+                var power = gameService.equipedItem ? gameService.equipedItem.dmg : 'NA';
+
                 $cell.qtip({
                     show: 'tap',
                     hide: {
@@ -163,7 +165,7 @@
                     },
                     content: {
                         title: 'Myself:',
-                        text: 'Login: ' + gameService.player.login + ',</br>Life: ' + gameService.player.life + '/' + gameService.player.lifeMax + ',</br>Lvl: ' + gameService.player.lvl + ',</br>XP: ' + gameService.player.xp + '/' + gameService.player.xpLvl
+                        text: 'Login: ' + gameService.player.login + ',</br>Life: ' + gameService.player.life + '/' + gameService.player.lifeMax + ',</br>Lvl: ' + gameService.player.lvl + ',</br>XP: ' + gameService.player.xp + '/' + gameService.player.xpLvl + ',</br>Power: ' + power
                     }
                 });
                 console.log(`Real pX ${gameService.player.x}, Real pY ${gameService.player.y}`);

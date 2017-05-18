@@ -62,8 +62,8 @@
             socketService.onInventoryAdd(addInventory.bind(this));
             socketService.onInventoryRemove(removeInventory.bind(this));
             socketService.onInventoryUpdate(addInventory.bind(this));
-            socketService.onEquipmentSet(setEquipment.bind(this));
-            socketService.onEquipmentUnset(unsetEquipment.bind(this));
+            socketService.onEquipementSet(setEquipement.bind(this));
+            socketService.onEquipementUnset(unsetEquipement.bind(this));
             socketService.onMsg(displayMessage.bind(this));
         }
 
@@ -161,14 +161,14 @@
             }
         }
 
-        function setEquipment(item) {
+        function setEquipement(item) {
             this.equipedItem = item;
-            $rootScope.$emit('updateEquipment');
+            $rootScope.$emit('updateGrid');
         }
 
-        function unsetEquipment() {
+        function unsetEquipement() {
             this.equipedItem = null;
-            $rootScope.$emit('updateEquipment');
+            $rootScope.$emit('updateGrid');
         }
 
         function displayMessage(msg) {

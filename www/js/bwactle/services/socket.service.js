@@ -32,8 +32,8 @@
             onInventoryUpdate: onInventoryUpdate,
             onInventoryAdd: onInventoryAdd,
             onInventoryRemove: onInventoryRemove,
-            onEquipmentSet: onEquipmentSet,
-            onEquipmentUnset: onEquipmentUnset,
+            onEquipementSet: onEquipementSet,
+            onEquipementUnset: onEquipementUnset,
             onMsg: onMsg,
             move: move,
             rotate: rotate,
@@ -139,13 +139,13 @@
                 cb(item);
             })
         }
-        function onEquipmentSet(cb) {
-            this.socket.on('equipment/set', function (item) {
+        function onEquipementSet(cb) {
+            this.socket.on('equipement/set', function (item) {
                 cb(item);
             })
         }
-        function onEquipmentUnset(cb) {
-            this.socket.on('equipment/unset', function () {
+        function onEquipementUnset(cb) {
+            this.socket.on('equipement/unset', function () {
                 cb();
             })
         }
