@@ -32,10 +32,10 @@
 
         function init(cb) {
             // DEBUG
-            this.inventory = [
-                { x: null, y: null, id: "591dd08677479d743548ad45", name: "Sword", dmg: 30, type: "weapon", use: -1 },
-                { x: null, y: null, id: "591db9f777479d743548a8fc", name: "Toxic Cloud", dmg: 55, type: "spell", use: 2 }
-            ];
+            // this.inventory = [
+            //     { x: null, y: null, id: "591dd08677479d743548ad45", name: "Sword", dmg: 30, type: "weapon", use: -1 },
+            //     { x: null, y: null, id: "591db9f777479d743548a8fc", name: "Toxic Cloud", dmg: 55, type: "spell", use: 2 }
+            // ];
             if (!this.isStarted) {
                 $rootScope.$emit('initGrid');
                 $rootScope.$emit('initInventory');
