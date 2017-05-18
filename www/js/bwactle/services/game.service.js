@@ -44,6 +44,9 @@
             socketService.onPlayerAdd(addPlayer.bind(this));
             socketService.onPlayerMove(addPlayer.bind(this));
             socketService.onPlayerRotation(addPlayer.bind(this));
+            socketService.onPlayerHurt(addPlayer.bind(this));
+            socketService.onPlayerXP(addPlayer.bind(this));
+            socketService.onPlayerLevel(addPlayer.bind(this));
             socketService.onPlayerRemove(removePlayer.bind(this));
             socketService.onItemAdd(addItem.bind(this));
             socketService.onItemRemove(removeItem.bind(this));
@@ -52,9 +55,11 @@
         }
 
         function addPlayer(newPlayer) {
-            if (newPlayer.login === this.player.login) {
-                this.player = newPlayer;
-                return $rootScope.$emit('updateGrid');
+            if (this.player) {
+                if (newPlayer.login === this.player.login) {
+                    this.player = newPlayer;
+                    return $rootScope.$emit('updateGrid');
+                }
             }
 
             var alreadyExist = this.players.find(function (player) {

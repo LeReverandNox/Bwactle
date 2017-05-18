@@ -22,6 +22,9 @@
             onPlayerMove: onPlayerMove,
             onPlayerRotation: onPlayerRotation,
             onPlayerRemove: onPlayerRemove,
+            onPlayerHurt: onPlayerHurt,
+            onPlayerXP: onPlayerXP,
+            onPlayerLevel: onPlayerLevel,
             onItemAdd: onItemAdd,
             onItemRemove: onItemRemove,
             onMsg: onMsg,
@@ -83,6 +86,21 @@
         function onPlayerRemove(cb) {
             this.socket.on('player/remove', function (login) {
                 cb(login);
+            });
+        }
+        function onPlayerHurt(cb) {
+            this.socket.on('player/hurt', function (player) {
+                cb(player);
+            });
+        }
+        function onPlayerXP(cb) {
+            this.socket.on('player/experience', function (player) {
+                cb(player);
+            });
+        }
+        function onPlayerLevel(cb) {
+            this.socket.on('player/level', function (player) {
+                cb(player);
             });
         }
         function onItemAdd(cb) {
