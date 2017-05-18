@@ -25,6 +25,7 @@
             init: init,
             startListeners: startListeners,
             addPlayer: addPlayer,
+            isWeapon: isWeapon,
             // Getters / Setters
             setPlayer: setPlayer
         };
@@ -66,6 +67,16 @@
             // TODO: implement and display
             socketService.onMsg(function (msg) {console.log(msg)});
         }
+
+        function isWeapon(itemId) {
+            var alreadyExist = this.inventory.find(function (item) {
+                return item.id === itemId;
+            });
+            if (alreadyExist.type === 'weapon') {
+                return true;
+            }
+            return false;
+        };
 
         function addPlayer(newPlayer) {
             if (this.player) {
@@ -175,6 +186,9 @@
         function attack() {
             socketService.attack(this.player.rot);
         }
+        function cast(e, itemId, direction) {
+            socketService.cast(itemId, direction);
+        }
         function pick() {
             socketService.pick();
         }
@@ -191,6 +205,7 @@
         $rootScope.$on('move', move);
         $rootScope.$on('rotate', rotate);
         $rootScope.$on('attack', attack.bind(service));
+        $rootScope.$on('cast', cast.bind(service));
         $rootScope.$on('pick', pick.bind(service));
         $rootScope.$on('equip', equip.bind(service));
         $rootScope.$on('drop', drop.bind(service));

@@ -38,6 +38,7 @@
             move: move,
             rotate: rotate,
             attack: attack,
+            cast: cast,
             pick: pick,
             equip: equip,
             drop: drop,
@@ -164,6 +165,9 @@
 
         function attack(direction) {
             this.socket.emit('attack', direction);
+        }
+        function cast(itemId, direction) {
+            this.socket.emit('cast', {item_id: itemId, direction: direction});
         }
         function pick() {
             this.socket.emit('pick');

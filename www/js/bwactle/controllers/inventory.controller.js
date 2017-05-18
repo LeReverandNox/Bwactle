@@ -20,7 +20,10 @@
 
             switch (action) {
             case 'equip':
-                $rootScope.$emit('equip', itemId);
+                if(gameService.isWeapon(itemId))
+                    $rootScope.$emit('equip', itemId);
+                else
+                    $rootScope.$emit('cast', itemId, gameService.player.rot);
                 break;
             case 'drop':
                 $rootScope.$emit('drop', itemId);
