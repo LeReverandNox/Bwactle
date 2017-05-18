@@ -20,10 +20,10 @@
 
             switch (action) {
             case 'equip':
-                gameService.equipItem(itemId);
+                $rootScope.$emit('equip', itemId);
                 break;
             case 'drop':
-                gameService.dropItem(itemId);
+                $rootScope.$emit('drop', itemId);
                 break;
             default:
                 break;

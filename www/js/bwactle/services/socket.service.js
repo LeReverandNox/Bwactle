@@ -32,13 +32,16 @@
             onInventoryUpdate: onInventoryUpdate,
             onInventoryAdd: onInventoryAdd,
             onInventoryRemove: onInventoryRemove,
+            onEquipmentSet: onEquipmentSet,
+            onEquipmentUnset: onEquipmentUnset,
             onMsg: onMsg,
             move: move,
             rotate: rotate,
             attack: attack,
             pick: pick,
             equip: equip,
-            drop: drop
+            drop: drop,
+            unequip: unequip
         };
 
         return service;
@@ -135,6 +138,16 @@
                 cb(item);
             })
         }
+        function onEquipmentSet(cb) {
+            this.socket.on('equipment/set', function (item) {
+                cb(item);
+            })
+        }
+        function onEquipmentUnset(cb) {
+            this.socket.on('equipment/unset', function () {
+                cb();
+            })
+        }
         function onMsg(cb) {
             this.socket.on('msg', function (msg) {
                 cb(msg);
@@ -160,6 +173,9 @@
         }
         function drop(itemId) {
             this.socket.emit('drop', itemId);
+        }
+        function unequip() {
+            this.socket.emit('unequip');
         }
     }
 }());

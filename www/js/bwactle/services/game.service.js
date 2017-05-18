@@ -16,6 +16,7 @@
             worldGrid: [],
             grid: [],
             player: null,
+            equipedItem: null,
             inventory: [],
             players: [],
             items: [],
@@ -24,8 +25,6 @@
             init: init,
             startListeners: startListeners,
             addPlayer: addPlayer,
-            equipItem: equipItem,
-            dropItem: dropItem,
             // Getters / Setters
             setPlayer: setPlayer
         };
@@ -62,16 +61,10 @@
             socketService.onInventoryAdd(addInventory.bind(this));
             socketService.onInventoryRemove(removeInventory.bind(this));
             socketService.onInventoryUpdate(addInventory.bind(this));
+            socketService.onEquipmentSet(setEquipment.bind(this));
+            socketService.onEquipmentUnset(unsetEquipment.bind(this));
             // TODO: implement and display
             socketService.onMsg(function (msg) {console.log(msg)});
-        }
-
-        function equipItem(itemId) {
-            socketService.equip(itemId);
-        }
-
-        function dropItem(itemId) {
-            socketService.drop(itemId);
         }
 
         function addPlayer(newPlayer) {
@@ -158,6 +151,20 @@
             }
         }
 
+        function setEquipment(item) {
+            console.log('On equip');
+            console.log(item);
+            this.equipedItem = item;
+            $rootScope.$emit('updateEquipment');
+        }
+
+        function unsetEquipment() {
+            console.log('On DESequip');
+
+            this.equipedItem = null;
+            $rootScope.$emit('updateEquipment');
+        }
+
         // PRIVATE
         function move(e, direction) {
             socketService.move(direction);
@@ -171,12 +178,23 @@
         function pick() {
             socketService.pick();
         }
-
+        function equip(e, itemId) {
+            socketService.equip(itemId);
+        }
+        function drop(e, itemId) {
+            socketService.drop(itemId);
+        }
+        function unequip() {
+            socketService.unequip();
+        }
         // EVENTS
         $rootScope.$on('move', move);
         $rootScope.$on('rotate', rotate);
         $rootScope.$on('attack', attack.bind(service));
         $rootScope.$on('pick', pick.bind(service));
+        $rootScope.$on('equip', equip.bind(service));
+        $rootScope.$on('drop', drop.bind(service));
+        $rootScope.$on('unequip', unequip.bind(service));
 
         return service;
     }
