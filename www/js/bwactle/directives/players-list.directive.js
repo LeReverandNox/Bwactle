@@ -14,7 +14,7 @@
         var directive = {
             restrict: "EA",
             link: link,
-            templateUrl: "/templates/players-list.html",
+            templateUrl: "templates/players-list.html",
             controller: "Players",
             controllerAs: "P",
             bindToController: true

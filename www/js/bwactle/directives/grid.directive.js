@@ -14,7 +14,7 @@
         var directive = {
             restrict: "EA",
             link: link,
-            templateUrl: "/templates/grid.html",
+            templateUrl: "templates/grid.html",
             controller: "Grid",
             controllerAs: "G",
             bindToController: true
