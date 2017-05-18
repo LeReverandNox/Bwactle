@@ -24,15 +24,24 @@
             init: init,
             startListeners: startListeners,
             addPlayer: addPlayer,
+            equipItem: equipItem,
+            dropItem: dropItem,
             // Getters / Setters
             setPlayer: setPlayer
         };
 
         function init(cb) {
+            // DEBUG
+            this.inventory = [
+                { x: null, y: null, id: "591dd08677479d743548ad45", name: "Sword", dmg: 30, type: "weapon", use: -1 },
+                { x: null, y: null, id: "591db9f777479d743548a8fc", name: "Toxic Cloud", dmg: 55, type: "spell", use: 2 }
+            ];
             if (!this.isStarted) {
                 $rootScope.$emit('initGrid');
+                $rootScope.$emit('initInventory');
             }
             $rootScope.$emit('updateGrid');
+            $rootScope.$emit('updateInventory');
         }
 
         function setPlayer(player) {
@@ -50,8 +59,19 @@
             socketService.onPlayerRemove(removePlayer.bind(this));
             socketService.onItemAdd(addItem.bind(this));
             socketService.onItemRemove(removeItem.bind(this));
+            socketService.onInventoryAdd(addInventory.bind(this));
+            socketService.onInventoryRemove(removeInventory.bind(this));
+            socketService.onInventoryUpdate(addInventory.bind(this));
             // TODO: implement and display
             socketService.onMsg(function (msg) {console.log(msg)});
+        }
+
+        function equipItem(itemId) {
+            socketService.equip(itemId);
+        }
+
+        function dropItem(itemId) {
+            socketService.drop(itemId);
         }
 
         function addPlayer(newPlayer) {
@@ -112,6 +132,29 @@
             if (index !== -1) {
                 this.items.splice(index, 1);
                 $rootScope.$emit('updateGrid');
+            }
+        }
+
+        function addInventory(newItem) {
+            var alreadyExist = this.inventory.find(function (item) {
+                return item.id === newItem.id;
+            });
+            if (!alreadyExist) {
+                this.inventory.push(newItem);
+            } else {
+                alreadyExist = newItem;
+            }
+            $rootScope.$emit('updateInventory');
+
+        }
+
+        function removeInventory(itemId) {
+            var index = this.inventory.findIndex(function (item) {
+                return item.id === itemId;
+            });
+            if (index !== -1) {
+                this.inventory.splice(index, 1);
+                $rootScope.$emit('updateInventory');
             }
         }
 

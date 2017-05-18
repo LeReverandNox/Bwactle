@@ -22,3 +22,19 @@ grid {
     vertical-align: top;
     line-height: 30px;
 }
+inventory {
+  display: block;
+  text-align: center;
+  padding-top: 14px;
+}
+
+.inventory-cell {
+  border: 1px solid #ddd;
+  width: 70px;
+  height: 70px;
+  display: inline-block;
+  vertical-align: top;
+  line-height: 70px;
+}
+
+

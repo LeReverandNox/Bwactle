@@ -9,7 +9,9 @@
         .factory("socketService", socketService);
 
     socketService.$inject = ["socketFactory"];
-
+    // socket.on('inventory/Remove', function (item) { }); Update informations about an item in yout inventory
+    // socket.on('inventory/add', function (item) { }); An item is added to your inventory
+    // socket.on('inveotory/remove', function (item_id) { }); An item is removed from your inventory
     function socketService(socketFactory) {
         var service = {
             // Attributes
@@ -27,11 +29,16 @@
             onPlayerLevel: onPlayerLevel,
             onItemAdd: onItemAdd,
             onItemRemove: onItemRemove,
+            onInventoryUpdate: onInventoryUpdate,
+            onInventoryAdd: onInventoryAdd,
+            onInventoryRemove: onInventoryRemove,
             onMsg: onMsg,
             move: move,
             rotate: rotate,
             attack: attack,
-            pick: pick
+            pick: pick,
+            equip: equip,
+            drop: drop
         };
 
         return service;
@@ -113,6 +120,21 @@
                 cb(itemId);
             });
         }
+        function onInventoryAdd(cb) {
+            this.socket.on('inventory/add', function (item) {
+                cb(item);
+            });
+        }
+        function onInventoryRemove(cb) {
+            this.socket.on('inventory/remove', function (itemId) {
+                cb(itemId);
+            });
+        }
+        function onInventoryUpdate(cb) {
+            this.socket.on('inventory/update', function (item) {
+                cb(item);
+            })
+        }
         function onMsg(cb) {
             this.socket.on('msg', function (msg) {
                 cb(msg);
@@ -132,6 +154,12 @@
         }
         function pick() {
             this.socket.emit('pick');
+        }
+        function equip(itemId) {
+            this.socket.emit('equip', itemId);
+        }
+        function drop(itemId) {
+            this.socket.emit('drop', itemId);
         }
     }
 }());
