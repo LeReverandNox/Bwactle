@@ -40,6 +40,7 @@
         function startListeners() {
             socketService.onPlayerAdd(addPlayer.bind(this));
             socketService.onPlayerMove(addPlayer.bind(this));
+            socketService.onPlayerRotation(addPlayer.bind(this));
             socketService.onPlayerRemove(removePlayer.bind(this));
             socketService.onItemAdd(addItem.bind(this));
             socketService.onItemRemove(removeItem.bind(this));
@@ -48,9 +49,6 @@
         }
 
         function addPlayer(newPlayer) {
-            // console.log("LE NEW PLAYER");
-            // console.log(newPlayer);
-            // console.log('*****');
             if (newPlayer.login === this.player.login) {
                 this.player = newPlayer;
                 return $rootScope.$emit('updateGrid');
@@ -59,7 +57,7 @@
             var alreadyExist = this.players.find(function (player) {
                 return player.login === newPlayer.login;
             });
-            // console.log(alreadyExist);
+
             if (alreadyExist) {
                 // console.log(`${newPlayer.login} est deja co, on update`);
                 alreadyExist = newPlayer;
@@ -113,6 +111,9 @@
         function move(e, direction) {
             socketService.move(direction);
         }
+        function rotate(e, direction) {
+            socketService.rotate(direction);
+        }
         function attack() {
             socketService.attack(this.player.rot);
         }
@@ -122,6 +123,7 @@
 
         // EVENTS
         $rootScope.$on('move', move);
+        $rootScope.$on('rotate', rotate);
         $rootScope.$on('attack', attack.bind(service));
         $rootScope.$on('pick', pick.bind(service));
 

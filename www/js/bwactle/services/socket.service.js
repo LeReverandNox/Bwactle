@@ -20,11 +20,13 @@
             disconnect: disconnect,
             onPlayerAdd: onPlayerAdd,
             onPlayerMove: onPlayerMove,
+            onPlayerRotation: onPlayerRotation,
             onPlayerRemove: onPlayerRemove,
             onItemAdd: onItemAdd,
             onItemRemove: onItemRemove,
             onMsg: onMsg,
             move: move,
+            rotate: rotate,
             attack: attack,
             pick: pick
         };
@@ -73,6 +75,11 @@
                 cb(player);
             });
         }
+        function onPlayerRotation(cb) {
+            this.socket.on('player/rotation', function (player) {
+                cb(player);
+            });
+        }
         function onPlayerRemove(cb) {
             this.socket.on('player/remove', function (login) {
                 cb(login);
@@ -96,6 +103,10 @@
 
         function move(direction) {
             this.socket.emit('move', direction);
+        }
+
+        function rotate(direction) {
+            this.socket.emit('rotate', direction);
         }
 
         function attack(direction) {

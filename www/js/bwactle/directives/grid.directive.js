@@ -37,6 +37,7 @@
                     $row = angular.element('<div class="game-row"></div>').appendTo($gridHolder);
                     for (j = 0; j < 11; j += 1) {
                         $cell = angular.element('<div class="game-cell"></div>').appendTo($row);
+                        $cell.css('background-color', 'white');
                     }
                 }
             }
@@ -70,8 +71,8 @@
                     if ((player.x <= gridLastIndexX && player.x >= gridOffsetX) &&
                         (player.y <= gridLastIndexY && player.y >= gridOffsetY))
                     {
-                        console.log(`On a ce player dand l'array`);
-                        console.log(player);
+                        // console.log(`On a ce player dand l'array`);
+                        // console.log(player);
 
                         var localX, localY;
 
@@ -89,8 +90,8 @@
                     if ((item.x <= gridLastIndexX && item.x >= gridOffsetX) &&
                         (item.y <= gridLastIndexY && item.y >= gridOffsetY)) {
                         var localX, localY;
-                        console.log(`On a ce item dand l'array`);
-                        console.log(item);
+                        // console.log(`On a ce item dand l'array`);
+                        // console.log(item);
 
                         localX = item.x - gridOffsetX;
                         localY = item.y - gridOffsetY;
@@ -154,29 +155,67 @@
                 spawnItems();
             }
 
+            function isCellAtAvailable(x, y) {
+                if (x < 0 || y < 0) {
+                    return false;
+                }
+                var cell = findCellAt(x, y);
+                // console.log(`Voici la next cell a ${x} ${y}`);
+                // console.log(cell.css('background-color'), cell.html());
+                if (cell.css('background-color') === 'rgb(255, 255, 255)' && cell.html() === '') {
+                    return true;
+                }
+            }
+
             function startEmitters() {
+                var nextLocalX, nextLocalY;
+
                 angular.element(document).keydown(function (e) {
                     console.log(e.which);
-                    switch(e.which) {
-                        case 37: // left
+                    switch (e.which) {
+                    case 37: // left
+                        nextLocalX = (gameService.player.x - gridOffsetX - 1);
+                        nextLocalY = (gameService.player.y - gridOffsetY);
+                        if (isCellAtAvailable(nextLocalX, nextLocalY)) {
                             $rootScope.$emit('move', 'left');
-                            break;
-                        case 38: // up
+                        } else {
+                            $rootScope.$emit('rotate', 'left');
+                        }
+                        break;
+                    case 38: // up
+                        nextLocalX = (gameService.player.x - gridOffsetX);
+                        nextLocalY = (gameService.player.y - gridOffsetY - 1);
+                        if (isCellAtAvailable(nextLocalX, nextLocalY)) {
                             $rootScope.$emit('move', 'up');
-                            break;
-                        case 39: // right
+                        } else {
+                            $rootScope.$emit('rotate', 'up');
+                        }
+                        break;
+                    case 39: // right
+                        nextLocalX = (gameService.player.x - gridOffsetX + 1);
+                        nextLocalY = (gameService.player.y - gridOffsetY);
+                        if (isCellAtAvailable(nextLocalX, nextLocalY)) {
                             $rootScope.$emit('move', 'right');
-                            break;
-                        case 40: // down
+                        } else {
+                            $rootScope.$emit('rotate', 'right');
+                        }
+                        break;
+                    case 40: // down
+                        nextLocalX = (gameService.player.x - gridOffsetX);
+                        nextLocalY = (gameService.player.y - gridOffsetY + 1);
+                        if (isCellAtAvailable(nextLocalX, nextLocalY)) {
                             $rootScope.$emit('move', 'down');
-                            break;
-                        case 65: // A
-                            $rootScope.$emit('attack');
-                            break;
-                        case 80: // P
-                            $rootScope.$emit('pick');
-                            break;
-                        default: return; // exit this handler for other keys
+                        } else {
+                            $rootScope.$emit('rotate', 'down');
+                        }
+                        break;
+                    case 65: // A
+                        $rootScope.$emit('attack');
+                        break;
+                    case 80: // P
+                        $rootScope.$emit('pick');
+                        break;
+                    default: return; // exit this handler for other keys
                     }
                     e.preventDefault(); // prevent the default action (scroll / move caret)
                 });
