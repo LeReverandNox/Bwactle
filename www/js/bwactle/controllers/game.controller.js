@@ -38,6 +38,9 @@
                 case 'unequip':
                     unequip();
                     break;
+                case 'pick':
+                    pick();
+                    break;
                 default:
                     break;
             }
@@ -51,5 +54,8 @@
             $rootScope.$emit('unequip');
         };
 
+        function pick() {
+            $rootScope.$emit('pick');
+        };
     }
 }());
