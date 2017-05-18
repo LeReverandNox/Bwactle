@@ -72,8 +72,8 @@
                     if ((player.x <= gridLastIndexX && player.x >= gridOffsetX) &&
                         (player.y <= gridLastIndexY && player.y >= gridOffsetY))
                     {
-                        console.log(`On a ce player dand l'array`);
-                        console.log(player);
+                        // console.log(`On a ce player dand l'array`);
+                        // console.log(player);
 
                         var localX, localY, $cell;
 
@@ -101,8 +101,8 @@
                     if ((item.x <= gridLastIndexX && item.x >= gridOffsetX) &&
                         (item.y <= gridLastIndexY && item.y >= gridOffsetY)) {
                         var localX, localY, $cell;
-                        console.log(`On a ce item dand l'array`);
-                        console.log(item);
+                        // console.log(`On a ce item dand l'array`);
+                        // console.log(item);
 
                         localX = item.x - gridOffsetX;
                         localY = item.y - gridOffsetY;
@@ -201,12 +201,11 @@
                 }
             }
 
-            function startEmitters() {
+            function keyHandler(e) {
                 var nextLocalX, nextLocalY;
 
-                angular.element(document).keydown(function (e) {
-                    console.log(e.which);
-                    switch (e.which) {
+                // console.log(e.which);
+                switch (e.which) {
                     case 37: // left
                         nextLocalX = (gameService.player.x - gridOffsetX - 1);
                         nextLocalY = (gameService.player.y - gridOffsetY);
@@ -250,14 +249,20 @@
                         $rootScope.$emit('pick');
                         break;
                     default: return; // exit this handler for other keys
-                    }
-                    e.preventDefault(); // prevent the default action (scroll / move caret)
-                });
+                }
+                e.preventDefault(); // prevent the default action (scroll / move caret)
+            }
+            function startEmitters() {
+                angular.element(document).keydown(keyHandler);
+            }
+            function stopEmitters() {
+                angular.element(document).off('keydown', keyHandler);
             }
 
             $rootScope.$on('initGrid', initGrid);
             $rootScope.$on('updateGrid', updateGrid);
             $rootScope.$on('startEmitters', startEmitters);
+            $rootScope.$on('stopEmitters', stopEmitters);
         }
     }
 }());

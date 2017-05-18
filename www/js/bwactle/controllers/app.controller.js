@@ -25,6 +25,7 @@
                     title: "Info",
                     template: "You are now disconnected.\nSee you 'round"
                 }).then(function () {
+                    $rootScope.$emit('stopEmitters');
                     $state.go('login');
                 });
 
