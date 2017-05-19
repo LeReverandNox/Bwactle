@@ -53,7 +53,7 @@
             socketService.onPlayerAdd(addPlayer.bind(this));
             socketService.onPlayerMove(addPlayer.bind(this));
             socketService.onPlayerRotation(addPlayer.bind(this));
-            socketService.onPlayerHurt(addPlayer.bind(this));
+            socketService.onPlayerHurt(hurtPlayer.bind(this));
             socketService.onPlayerXP(addPlayer.bind(this));
             socketService.onPlayerLevel(addPlayer.bind(this));
             socketService.onPlayerRemove(removePlayer.bind(this));
@@ -67,6 +67,16 @@
             socketService.onMsg(displayMessage.bind(this));
         }
 
+        function hurtPlayer(hurtedPlayer) {
+            if (this.player) {
+                if (hurtedPlayer.login === this.player.login) {
+                    var newLife = this.player.life - hurtedPlayer.life;
+                    $rootScope.$emit('updateMsg', {type: 0, content: 'You loose ' + newLife + ' HP !'});
+                }
+            }
+            addPlayer.call(this, hurtedPlayer);
+        }
+
         function isWeapon(itemId) {
             var alreadyExist = this.inventory.find(function (item) {
                 return item.id === itemId;
@@ -78,6 +88,7 @@
         };
 
         function addPlayer(newPlayer) {
+            console.log(newPlayer);
             if (this.player) {
                 if (newPlayer.login === this.player.login) {
                     this.player = newPlayer;
