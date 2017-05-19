@@ -91,15 +91,14 @@
 
             if (alreadyExist) {
                 // console.log(`${newPlayer.login} est deja co, on update`);
-                alreadyExist = newPlayer;
-                // alreadyExist.x = newPlayer.x;
-                // alreadyExist.y = newPlayer.y;
-                // alreadyExist.lvl = newPlayer.lvl;
-                // alreadyExist.life = newPlayer.life;
-                // alreadyExist.lifeMax = newPlayer.lifeMax;
-                // alreadyExist.xp = newPlayer.xp;
-                // alreadyExist.xpLvl = newPlayer.xpLvl;
-                // alreadyExist.rot = newPlayer.rot;
+                alreadyExist.x = newPlayer.x;
+                alreadyExist.y = newPlayer.y;
+                alreadyExist.lvl = newPlayer.lvl;
+                alreadyExist.life = newPlayer.life;
+                alreadyExist.lifeMax = newPlayer.lifeMax;
+                alreadyExist.xp = newPlayer.xp;
+                alreadyExist.xpLvl = newPlayer.xpLvl;
+                alreadyExist.rot = newPlayer.rot;
             } else {
                 this.players.push(newPlayer);
             }
