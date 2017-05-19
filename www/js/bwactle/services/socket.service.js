@@ -15,7 +15,7 @@
     function socketService(socketFactory) {
         var service = {
             // Attributes
-            apiUrl: 'http://wac.epitech.eu:1337',
+            apiUrl: 'ws://wac.epitech.eu:1337',
             socket: null,
             //Methods
             connect: connect,
